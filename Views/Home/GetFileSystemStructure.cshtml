@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DirDto>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="~/css/FileSystemStructure.css" />
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<div id="hierarchy">
+
+    @foreach (var drive in Model)
+    {
+        <div class="foldercontainer" style="display: block; position: relative">
+
+            @{
+                UnitOfInformation unitForDirs = (UnitOfInformation)ViewData["unitForDirs"];
+                var dirSize = SizeConverter.GetSizeInUnit(drive.Size, unitForDirs);
+            }
+
+            <div class="folder fa-folder" data-isexpanded="false">
+                <span class="folder" style="display:inline-block; word-wrap: break-word; max-width: 300px;">@drive.Name</span>
+                <span class="folder" style="display:inline-block; position: absolute; left: 400px;">(@dirSize @unitForDirs)</span>
+            </div>
+
+            @foreach (var file in drive.Files.OrderByDescending(file => file.Size))
+            {
+                UnitOfInformation unitForFiles = (UnitOfInformation)ViewData["unitForFiles"];
+                var fileSize = SizeConverter.GetSizeInUnit(file.Size, unitForFiles);
+                <div class="file" style="display: none">
+                    <span style="display:inline-block; word-wrap: break-word; max-width: 350px;">@file.Name</span>
+                    <span style="display:inline-block; position: absolute; left: 450px;">(@fileSize @unitForFiles)</span>
+                </div>
+            }
+
+            @await Html.PartialAsync("_PartialFileSystemStructure", drive)
+
+        </div>
+    }
+</div>
+
+<script src="~/js/FileSystemStructure.js" asp-append-version="true"></script>

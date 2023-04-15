@@ -1,0 +1,33 @@
+﻿<form method="post" asp-controller="Home" asp-action="GetFileSystemStructure">
+
+    <label for="ExcludedDrives">Исключить диски:</label><br>
+    <input type="text" id="ExcludedDrives" name="ExcludedDrives" placeholder="D:\"/><br><br>
+
+    <label for="ExcludedRootDirs">Исключить корневые директории:</label><br>
+    <input type="text" id="ExcludedRootDirs" name="ExcludedRootDirs" value="C:\Windows, C:\Users" title="C:\Windows и C:\Users содержат очень много файлов и директорий, поэтому время выполнения с ними значительно увеличивается"/><br><br>
+
+    <label for="uoiForDir-select">Единица измерения для директорий:</label><br>
+    <select name="unitForDirs" id="uoiForDir-select" title="по умолчанию bytes">
+        <option value="">--Выберите опцию--</option>
+        @foreach (var unitOfInfo in Enum.GetValues(typeof(UnitOfInformation)))
+        {
+            <option value="@unitOfInfo">@unitOfInfo</option>
+        }
+    </select><br><br>
+
+    <label for="uoiForFile-select">Единица измерения для файлов:</label><br>
+    <select name="unitForFiles" id="uoiForFile-select" title="по умолчанию bytes">
+        <option value="">--Выберите опцию--</option>
+        @foreach (var unitOfInfo in Enum.GetValues(typeof(UnitOfInformation)))
+        {
+            <option value="@unitOfInfo">@unitOfInfo</option>
+        }
+    </select><br><br>
+
+    <input type="submit" value="Отправить" />
+</form>
+
+<br><br>
+<p> P.S. Итерация по всей файловой системе занимает какое-то время, загрузка веб-страницы занимает большую часть времени. </p>
+<p> Браузеру понадобится очень много оперативной памяти для рендера и хранения всех объектов. </p>
+<p> Пожалуйста, будьте терпеливы. </p>

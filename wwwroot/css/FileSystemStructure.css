@@ -1,0 +1,28 @@
+﻿#hierarchy {
+    font-family: FontAwesome;
+}
+
+.foldercontainer, .file {
+    display: block;
+    padding: 5px 5px 5px 50px;
+}
+
+.folder {
+    color: red;
+}
+
+.file {
+    color: green;
+}
+
+.folder, .file {
+    cursor: pointer;
+}
+
+.folder:hover, .file:hover {
+    background: yellow;
+}
+
+.folder:before, .file:before {
+    padding-right: 10px;
+}
