@@ -12,9 +12,9 @@ namespace WebFileExplorer.Services
     {
         private readonly ExcludedOptions _excludedOptions;
 
-        public DriveContentService(ExcludedOptions filterOptions)
+        public DriveContentService(ExcludedOptions excludedOptions)
         {
-            _excludedOptions = filterOptions;
+            _excludedOptions = excludedOptions;
         }
 
         public IEnumerable<DirDto> GetAllDrivesContent()
