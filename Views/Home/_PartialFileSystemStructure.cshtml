@@ -1,22 +1,23 @@
 ﻿@model DirDto
 
-@foreach (var dir in @Model.Dirs.OrderByDescending(dir => dir.Size))
-{
-    <div class="foldercontainer" style="display: none; position: relative">
+@{
+    UnitOfInformation unitForDirs = (UnitOfInformation)ViewData["unitForDirs"];
+    UnitOfInformation unitForFiles = (UnitOfInformation)ViewData["unitForFiles"];
+    SortOrder sortOrder = (SortOrder)ViewData["sortOrder"];
+}
 
-        @{
-            UnitOfInformation unitForDirs = (UnitOfInformation)ViewData["unitForDirs"];
-            var dirSize = SizeConverter.GetSizeInUnit(dir.Size, unitForDirs);
-        }
+@foreach (var dir in @Model.Dirs.DirOrderBy(sortOrder))
+{
+    var dirSize = SizeConverter.GetSizeInUnit(dir.Size, unitForDirs);
+    <div class="foldercontainer" style="display: none; position: relative">
 
         <div class="folder fa-folder" data-isexpanded="false">
             <span style="display:inline-block; word-wrap: break-word; max-width: 300px;">@dir.Name</span>
             <span style="display:inline-block; position: absolute; left: 400px;">(@dirSize @unitForDirs)</span>
         </div>
 
-        @foreach (var file in dir.Files.OrderByDescending(file => file.Size))
+        @foreach (var file in dir.Files.FileOrderBy(sortOrder))
         {
-            UnitOfInformation unitForFiles = (UnitOfInformation)ViewData["unitForFiles"];
             var fileSize = SizeConverter.GetSizeInUnit(file.Size, unitForFiles);
             <div class="file" style="display: none">
                 <span style="display:inline-block; word-wrap: break-word; max-width: 350px;">@file.Name</span>

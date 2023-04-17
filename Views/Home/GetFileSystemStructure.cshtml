@@ -7,25 +7,25 @@
     <h1 class="display-4">Welcome</h1>
 </div>
 
-<div id="hierarchy">
+@{
+    UnitOfInformation unitForDirs = (UnitOfInformation)ViewData["unitForDirs"];
+    UnitOfInformation unitForFiles = (UnitOfInformation)ViewData["unitForFiles"];
+    SortOrder sortOrder = (SortOrder)ViewData["sortOrder"];
+}
 
+<div id="hierarchy">
     @foreach (var drive in Model)
     {
+        var driveSize = SizeConverter.GetSizeInUnit(drive.Size, unitForDirs);
         <div class="foldercontainer" style="display: block; position: relative">
-
-            @{
-                UnitOfInformation unitForDirs = (UnitOfInformation)ViewData["unitForDirs"];
-                var dirSize = SizeConverter.GetSizeInUnit(drive.Size, unitForDirs);
-            }
 
             <div class="folder fa-folder" data-isexpanded="false">
                 <span class="folder" style="display:inline-block; word-wrap: break-word; max-width: 300px;">@drive.Name</span>
-                <span class="folder" style="display:inline-block; position: absolute; left: 400px;">(@dirSize @unitForDirs)</span>
+                <span class="folder" style="display:inline-block; position: absolute; left: 400px;">(@driveSize @unitForDirs)</span>
             </div>
 
-            @foreach (var file in drive.Files.OrderByDescending(file => file.Size))
+            @foreach (var file in drive.Files.FileOrderBy(sortOrder))
             {
-                UnitOfInformation unitForFiles = (UnitOfInformation)ViewData["unitForFiles"];
                 var fileSize = SizeConverter.GetSizeInUnit(file.Size, unitForFiles);
                 <div class="file" style="display: none">
                     <span style="display:inline-block; word-wrap: break-word; max-width: 350px;">@file.Name</span>

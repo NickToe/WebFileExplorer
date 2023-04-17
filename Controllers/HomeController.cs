@@ -16,10 +16,11 @@ namespace WebFileExplorer.Controllers
             return View();
         }
 
-        public IActionResult GetFileSystemStructure(ExcludedOptions excludedOptions, UnitOfInformation unitForDirs, UnitOfInformation unitForFiles)
+        public IActionResult GetFileSystemStructure(ExcludedOptions excludedOptions, UnitOfInformation unitForDirs, UnitOfInformation unitForFiles, SortOrder sortOrder)
         {
             ViewData["unitForDirs"] = unitForDirs;
             ViewData["unitForFiles"] = unitForFiles;
+            ViewData["sortOrder"] = sortOrder;
             DriveContentService driveContentService = new DriveContentService(excludedOptions);
             return View(driveContentService.GetAllDrivesContent());
         }

@@ -24,6 +24,15 @@
         }
     </select><br><br>
 
+    <label for="sortOrder-select">Сортировка по:</label><br>
+    <select name="sortOrder" id="sortOrder-select" title="по умолчанию 'по возрастанию (ascending)'">
+        <option value="">--Выберите опцию--</option>
+        @foreach (var sortOrder in Enum.GetValues(typeof(SortOrder)))
+        {
+            <option value="@sortOrder">@sortOrder</option>
+        }
+    </select><br><br>
+
     <input type="submit" value="Отправить" />
 </form>
 
